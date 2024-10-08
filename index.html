@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Simple Calendar</title>
+</head>
+<body>
+    <div class="calendar">
+        <div class="header">
+            <button id="prevMonth">❮</button>
+            <h2 id="monthYear"></h2>
+            <button id="nextMonth">❯</button>
+        </div>
+        <div class="days">
+            <div class="day">Sun</div>
+            <div class="day">Mon</div>
+            <div class="day">Tue</div>
+            <div class="day">Wed</div>
+            <div class="day">Thu</div>
+            <div class="day">Fri</div>
+            <div class="day">Sat</div>
+        </div>
+        <div class="dates" id="dates"></div>
+    </div>
+    <script> let previousmonth = document.getElementById("prevMonth")
+        let nextmonth = document.getElementById("nextMonth")
+        let monthyear = document.getElementById("monthYear")
+        const dates = document.getElementById("dates");
+        
+        let currentdate = new Date();
+        
+        const renderCalender= ()=>{
+            const month = currentdate.getMonth()
+            const year = currentdate.getFullYear()
+            monthyear.textContent =  currentdate.toLocaleString('default' , {month:"long"}) + ' '+ year
+            
+            const firstday = new Date(year , month , 1)
+            const lastday = new Date(year , month + 1 , 0)
+            
+            const totalDays = lastday.getDate();
+            const startingDay = firstday.getDay();
+            
+            dates.innerHTML = ' ';
+        
+                // Empty days before the first day of the month
+                for (let i = 0; i < startingDay; i++) {
+                    dates.innerHTML += `<div class="date"></div>`;
+                }
+                
+                // Days of the month
+                for (let day = 1; day <= totalDays; day++) {
+                    dates.innerHTML += `<div class="date">${day}</div>`;
+                }
+            }
+            
+        
+        previousmonth.addEventListener('click', ()=>{
+            currentdate.setMonth(currentdate.getMonth() - 1)
+            renderCalender();
+        })
+        
+        nextmonth.addEventListener('click', ()=>{
+            currentdate.setMonth(currentdate.getMonth() + 1)
+            renderCalender();
+        })
+        renderCalender();
+        </script>
+</body>
+</html>
